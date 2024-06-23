@@ -133,7 +133,7 @@
         }
 
         .shape-picker-popup {
-            grid-template-columns: repeat(3, auto);
+            grid-template-columns: repeat(4, auto);
         }
 
         .color-picker-popup div,
@@ -182,6 +182,7 @@
                     style="cursor: pointer;">
                 <img class="shape" src="triangle.svg" data-shape="triangle" alt="triangle shape"
                     style="cursor: pointer;">
+                <img class="shape" src="square.svg" data-shape="square" alt="square shape" style="cursor: pointer;">
             </div>
         </div>
     </div>
@@ -225,6 +226,8 @@
                     shapeSwatchSrc = 'pentagon.svg';
                 } else if (rippleShape === 'triangle') {
                     shapeSwatchSrc = 'triangle.svg';
+                } else if (rippleShape === 'square') {
+                    shapeSwatchSrc = 'square.svg';
                 }
                 document.getElementById('shapeSwatch').src = shapeSwatchSrc;
                 document.getElementById('shapePickerPopup').style.display = 'none';
@@ -241,13 +244,13 @@
 
             const svgNS = "http://www.w3.org/2000/svg";
             const svg = document.createElementNS(svgNS, "svg");
-            svg.setAttribute("width", "100");
-            svg.setAttribute("height", "100");
+            svg.setAttribute("width", "104");
+            svg.setAttribute("height", "104");
 
             if (rippleShape === 'circle') {
                 const circle = document.createElementNS(svgNS, "circle");
-                circle.setAttribute("cx", "50");
-                circle.setAttribute("cy", "50");
+                circle.setAttribute("cx", "52");
+                circle.setAttribute("cy", "52");
                 circle.setAttribute("r", "50");
                 circle.setAttribute("fill", "none");
                 circle.setAttribute("stroke", rippleColor);
@@ -267,6 +270,19 @@
                 triangle.setAttribute("stroke", rippleColor);
                 triangle.setAttribute("stroke-width", "2");
                 svg.appendChild(triangle);
+            } else if (rippleShape === 'square') {
+                svg.setAttribute("width", "100");
+                svg.setAttribute("height", "100");
+
+                const square = document.createElementNS(svgNS, "rect");
+                square.setAttribute("x", "0");
+                square.setAttribute("y", "0");
+                square.setAttribute("width", "100");
+                square.setAttribute("height", "100");
+                square.setAttribute("fill", "none");
+                square.setAttribute("stroke", rippleColor);
+                square.setAttribute("stroke-width", "2");
+                svg.appendChild(square);
             }
 
             ripple.appendChild(svg);
