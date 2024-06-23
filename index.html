@@ -116,7 +116,8 @@
             transform: scale(0.95);
         }
 
-        .color-picker-popup {
+        .color-picker-popup,
+        .shape-picker-popup {
             position: absolute;
             bottom: 3rem;
             display: none;
@@ -132,18 +133,7 @@
         }
 
         .shape-picker-popup {
-            position: absolute;
-            bottom: 3rem;
-            display: none;
-            padding: 0.5rem;
-            border: 1px solid #e1e1e1;
-            border-radius: 0.25rem;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             grid-template-columns: repeat(3, auto);
-            gap: 0.25rem;
-            justify-content: center;
-            align-items: center;
         }
 
         .color-picker-popup div,
@@ -187,9 +177,11 @@
                 <img id="shapeSwatch" class="shape" src="circle.svg" alt="shape swatch">
             </button>
             <div class="shape-picker-popup" id="shapePickerPopup">
-                <img class="shape" src="circle.svg" data-shape="circle" alt="circle shape">
-                <img class="shape" src="pentagon.svg" data-shape="pentagon" alt="pentagon shape">
-                <img class="shape" src="triangle.svg" data-shape="triangle" alt="triangle shape">
+                <img class="shape" src="circle.svg" data-shape="circle" alt="circle shape" style="cursor: pointer;">
+                <img class="shape" src="pentagon.svg" data-shape="pentagon" alt="pentagon shape"
+                    style="cursor: pointer;">
+                <img class="shape" src="triangle.svg" data-shape="triangle" alt="triangle shape"
+                    style="cursor: pointer;">
             </div>
         </div>
     </div>
