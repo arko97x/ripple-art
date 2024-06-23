@@ -116,8 +116,7 @@
             transform: scale(0.95);
         }
 
-        .color-picker-popup,
-        .shape-picker-popup {
+        .color-picker-popup {
             position: absolute;
             bottom: 3rem;
             display: none;
@@ -132,24 +131,27 @@
             align-items: center;
         }
 
+        .shape-picker-popup {
+            position: absolute;
+            bottom: 3rem;
+            display: none;
+            padding: 0.5rem;
+            border: 1px solid #e1e1e1;
+            border-radius: 0.25rem;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            grid-template-columns: repeat(3, auto);
+            gap: 0.25rem;
+            justify-content: center;
+            align-items: center;
+        }
+
         .color-picker-popup div,
         .shape-picker-popup div {
             width: 24px;
             height: 24px;
             border-radius: 50%;
             cursor: pointer;
-        }
-
-        .shape-picker-popup div.circle {
-            background-color: #fff;
-            border: 1px solid #000;
-            border-radius: 50%;
-        }
-
-        .shape-picker-popup div.polygon {
-            background-color: #fff;
-            border: 2px solid #000;
-            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
         }
     </style>
 </head>
@@ -186,7 +188,7 @@
             </button>
             <div class="shape-picker-popup" id="shapePickerPopup">
                 <img class="shape" src="circle.svg" data-shape="circle" alt="circle shape">
-                <img class="shape" src="polygon.svg" data-shape="polygon" alt="polygon shape">
+                <img class="shape" src="pentagon.svg" data-shape="pentagon" alt="pentagon shape">
                 <img class="shape" src="triangle.svg" data-shape="triangle" alt="triangle shape">
             </div>
         </div>
@@ -223,8 +225,8 @@
                 let shapeSwatchSrc;
                 if (rippleShape === 'circle') {
                     shapeSwatchSrc = 'circle.svg';
-                } else if (rippleShape === 'polygon') {
-                    shapeSwatchSrc = 'polygon.svg';
+                } else if (rippleShape === 'pentagon') {
+                    shapeSwatchSrc = 'pentagon.svg';
                 } else if (rippleShape === 'triangle') {
                     shapeSwatchSrc = 'triangle.svg';
                 }
@@ -255,20 +257,20 @@
                 circle.setAttribute("stroke", rippleColor);
                 circle.setAttribute("stroke-width", "2");
                 svg.appendChild(circle);
-            } else if (rippleShape === 'polygon') {
-                const polygon = document.createElementNS(svgNS, "polygon");
-                polygon.setAttribute("points", "50,0 100,38 82,100 18,100 0,38");
-                polygon.setAttribute("fill", "none");
-                polygon.setAttribute("stroke", rippleColor);
-                polygon.setAttribute("stroke-width", "2");
-                svg.appendChild(polygon);
+            } else if (rippleShape === 'pentagon') {
+                const pentagon = document.createElementNS(svgNS, "polygon");
+                pentagon.setAttribute("points", "50,0 100,38 82,100 18,100 0,38");
+                pentagon.setAttribute("fill", "none");
+                pentagon.setAttribute("stroke", rippleColor);
+                pentagon.setAttribute("stroke-width", "2");
+                svg.appendChild(pentagon);
             } else if (rippleShape === 'triangle') {
-                const polygon = document.createElementNS(svgNS, "polygon");
-                polygon.setAttribute("points", "50,0 100,100 0,100");
-                polygon.setAttribute("fill", "none");
-                polygon.setAttribute("stroke", rippleColor);
-                polygon.setAttribute("stroke-width", "2");
-                svg.appendChild(polygon);
+                const triangle = document.createElementNS(svgNS, "polygon");
+                triangle.setAttribute("points", "50,0 100,100 0,100");
+                triangle.setAttribute("fill", "none");
+                triangle.setAttribute("stroke", rippleColor);
+                triangle.setAttribute("stroke-width", "2");
+                svg.appendChild(triangle);
             }
 
             ripple.appendChild(svg);
