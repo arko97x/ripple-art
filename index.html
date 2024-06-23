@@ -126,7 +126,7 @@
             border-radius: 0.25rem;
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            flex-wrap: wrap;
+            grid-template-columns: repeat(6, auto);
             gap: 0.25rem;
             justify-content: center;
             align-items: center;
@@ -187,6 +187,7 @@
             <div class="shape-picker-popup" id="shapePickerPopup">
                 <img class="shape" src="circle.svg" data-shape="circle" alt="circle shape">
                 <img class="shape" src="polygon.svg" data-shape="polygon" alt="polygon shape">
+                <img class="shape" src="triangle.svg" data-shape="triangle" alt="triangle shape">
             </div>
         </div>
     </div>
@@ -197,7 +198,7 @@
 
         document.getElementById('colorPickerButton').addEventListener('click', function (event) {
             const colorPickerPopup = document.getElementById('colorPickerPopup');
-            colorPickerPopup.style.display = colorPickerPopup.style.display === 'flex' ? 'none' : 'flex';
+            colorPickerPopup.style.display = colorPickerPopup.style.display === 'grid' ? 'none' : 'grid';
             event.stopPropagation();
         });
 
@@ -212,14 +213,22 @@
 
         document.getElementById('shapePickerButton').addEventListener('click', function (event) {
             const shapePickerPopup = document.getElementById('shapePickerPopup');
-            shapePickerPopup.style.display = shapePickerPopup.style.display === 'flex' ? 'none' : 'flex';
+            shapePickerPopup.style.display = shapePickerPopup.style.display === 'grid' ? 'none' : 'grid';
             event.stopPropagation();
         });
 
         document.getElementById('shapePickerPopup').addEventListener('click', function (e) {
             if (e.target.dataset.shape) {
                 rippleShape = e.target.dataset.shape;
-                document.getElementById('shapeSwatch').src = rippleShape === 'circle' ? 'circle.svg' : 'polygon.svg';
+                let shapeSwatchSrc;
+                if (rippleShape === 'circle') {
+                    shapeSwatchSrc = 'circle.svg';
+                } else if (rippleShape === 'polygon') {
+                    shapeSwatchSrc = 'polygon.svg';
+                } else if (rippleShape === 'triangle') {
+                    shapeSwatchSrc = 'triangle.svg';
+                }
+                document.getElementById('shapeSwatch').src = shapeSwatchSrc;
                 document.getElementById('shapePickerPopup').style.display = 'none';
             }
             e.stopPropagation();
@@ -249,6 +258,13 @@
             } else if (rippleShape === 'polygon') {
                 const polygon = document.createElementNS(svgNS, "polygon");
                 polygon.setAttribute("points", "50,0 100,38 82,100 18,100 0,38");
+                polygon.setAttribute("fill", "none");
+                polygon.setAttribute("stroke", rippleColor);
+                polygon.setAttribute("stroke-width", "2");
+                svg.appendChild(polygon);
+            } else if (rippleShape === 'triangle') {
+                const polygon = document.createElementNS(svgNS, "polygon");
+                polygon.setAttribute("points", "50,0 100,100 0,100");
                 polygon.setAttribute("fill", "none");
                 polygon.setAttribute("stroke", rippleColor);
                 polygon.setAttribute("stroke-width", "2");
