@@ -123,7 +123,8 @@
     <div id="container"></div>
     <div class="footer">
         <div class="button-container">
-            <button class="fancy-button" style="width: fit-content; background-color: #fff; border-color: #000;">
+            <button class="fancy-button" id="colorPickerButton"
+                style="width: fit-content; background-color: #fff; border-color: #000;">
                 <input type="color" id="colorPicker" value="#0096ff">
             </button>
         </div>
@@ -131,6 +132,10 @@
 
     <script>
         let rippleColor = '#0096ff';
+
+        document.getElementById('colorPickerButton').addEventListener('click', function () {
+            document.getElementById('colorPicker').click();
+        });
 
         document.getElementById('colorPicker').addEventListener('input', function (e) {
             rippleColor = e.target.value;
