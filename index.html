@@ -30,10 +30,8 @@
 
         .ripple {
             position: absolute;
-            border-radius: 50%;
-            border: 2px solid;
-            animation: ripple-animation 2s linear infinite;
             pointer-events: none;
+            animation: ripple-animation 2s linear infinite;
         }
 
         @keyframes ripple-animation {
@@ -52,9 +50,16 @@
             width: 24px;
             height: 24px;
             border-radius: 50%;
+            background-color: #0096ff;
             border: none;
             cursor: pointer;
-            background-color: #0096ff;
+        }
+
+        #shapeSwatch {
+            width: 24px;
+            height: 24px;
+            border: none;
+            cursor: pointer;
         }
 
         .header-logo {
@@ -105,7 +110,8 @@
             transform: scale(0.95);
         }
 
-        .color-picker-popup {
+        .color-picker-popup,
+        .shape-picker-popup {
             position: absolute;
             bottom: 3rem;
             display: none;
@@ -114,17 +120,30 @@
             border-radius: 0.25rem;
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            grid-template-columns: repeat(6, auto);
+            flex-wrap: wrap;
             gap: 0.25rem;
             justify-content: center;
             align-items: center;
         }
 
-        .color-picker-popup div {
+        .color-picker-popup div,
+        .shape-picker-popup div {
             width: 24px;
             height: 24px;
             border-radius: 50%;
             cursor: pointer;
+        }
+
+        .shape-picker-popup div.circle {
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 50%;
+        }
+
+        .shape-picker-popup div.polygon {
+            background-color: #fff;
+            border: 2px solid #000;
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
         }
     </style>
 </head>
@@ -153,14 +172,26 @@
                 <div style="background-color: #003049;" data-color="#003049"></div>
             </div>
         </div>
+        <!-- Shape Swatch Button -->
+        <div class="button-container" style="margin-left: 1rem;">
+            <button class="fancy-button" id="shapePickerButton"
+                style="width: fit-content; background-color: #fff; border-color: #000;">
+                <img id="shapeSwatch" class="shape" src="circle.svg" alt="shape swatch">
+            </button>
+            <div class="shape-picker-popup" id="shapePickerPopup">
+                <img class="shape" src="circle.svg" data-shape="circle" alt="circle shape">
+                <img class="shape" src="polygon.svg" data-shape="polygon" alt="polygon shape">
+            </div>
+        </div>
     </div>
 
     <script>
         let rippleColor = '#0096ff';
+        let rippleShape = 'circle';
 
         document.getElementById('colorPickerButton').addEventListener('click', function (event) {
             const colorPickerPopup = document.getElementById('colorPickerPopup');
-            colorPickerPopup.style.display = colorPickerPopup.style.display === 'grid' ? 'none' : 'grid';
+            colorPickerPopup.style.display = colorPickerPopup.style.display === 'flex' ? 'none' : 'flex';
             event.stopPropagation();
         });
 
@@ -173,15 +204,52 @@
             e.stopPropagation();
         });
 
+        document.getElementById('shapePickerButton').addEventListener('click', function (event) {
+            const shapePickerPopup = document.getElementById('shapePickerPopup');
+            shapePickerPopup.style.display = shapePickerPopup.style.display === 'flex' ? 'none' : 'flex';
+            event.stopPropagation();
+        });
+
+        document.getElementById('shapePickerPopup').addEventListener('click', function (e) {
+            if (e.target.dataset.shape) {
+                rippleShape = e.target.dataset.shape;
+                document.getElementById('shapeSwatch').src = rippleShape === 'circle' ? 'circle.svg' : 'polygon.svg';
+                document.getElementById('shapePickerPopup').style.display = 'none';
+            }
+            e.stopPropagation();
+        });
+
         document.getElementById('container').addEventListener('click', function (e) {
             const container = e.currentTarget;
             const ripple = document.createElement('div');
             ripple.className = 'ripple';
-            ripple.style.borderColor = rippleColor;
-            ripple.style.width = ripple.style.height = '100px';
             ripple.style.left = `${e.clientX - 50}px`;
             ripple.style.top = `${e.clientY - 50}px`;
 
+            const svgNS = "http://www.w3.org/2000/svg";
+            const svg = document.createElementNS(svgNS, "svg");
+            svg.setAttribute("width", "100");
+            svg.setAttribute("height", "100");
+
+            if (rippleShape === 'circle') {
+                const circle = document.createElementNS(svgNS, "circle");
+                circle.setAttribute("cx", "50");
+                circle.setAttribute("cy", "50");
+                circle.setAttribute("r", "50");
+                circle.setAttribute("fill", "none");
+                circle.setAttribute("stroke", rippleColor);
+                circle.setAttribute("stroke-width", "2");
+                svg.appendChild(circle);
+            } else if (rippleShape === 'polygon') {
+                const polygon = document.createElementNS(svgNS, "polygon");
+                polygon.setAttribute("points", "50,0 100,38 82,100 18,100 0,38");
+                polygon.setAttribute("fill", "none");
+                polygon.setAttribute("stroke", rippleColor);
+                polygon.setAttribute("stroke-width", "2");
+                svg.appendChild(polygon);
+            }
+
+            ripple.appendChild(svg);
             container.appendChild(ripple);
 
             ripple.addEventListener('animationend', function () {
@@ -191,13 +259,17 @@
 
         document.addEventListener('click', function () {
             const colorPickerPopup = document.getElementById('colorPickerPopup');
+            const shapePickerPopup = document.getElementById('shapePickerPopup');
             colorPickerPopup.style.display = 'none';
+            shapePickerPopup.style.display = 'none';
         });
 
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 const colorPickerPopup = document.getElementById('colorPickerPopup');
+                const shapePickerPopup = document.getElementById('shapePickerPopup');
                 colorPickerPopup.style.display = 'none';
+                shapePickerPopup.style.display = 'none';
             }
         });
 
