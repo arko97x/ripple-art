@@ -192,6 +192,8 @@
 
         document.getElementById('colorPickerButton').addEventListener('click', function (event) {
             const colorPickerPopup = document.getElementById('colorPickerPopup');
+            const shapePickerPopup = document.getElementById('shapePickerPopup');
+            shapePickerPopup.style.display = 'none'; // Close shape picker popup if open
             colorPickerPopup.style.display = colorPickerPopup.style.display === 'grid' ? 'none' : 'grid';
             event.stopPropagation();
         });
@@ -207,6 +209,8 @@
 
         document.getElementById('shapePickerButton').addEventListener('click', function (event) {
             const shapePickerPopup = document.getElementById('shapePickerPopup');
+            const colorPickerPopup = document.getElementById('colorPickerPopup');
+            colorPickerPopup.style.display = 'none'; // Close color picker popup if open
             shapePickerPopup.style.display = shapePickerPopup.style.display === 'grid' ? 'none' : 'grid';
             event.stopPropagation();
         });
