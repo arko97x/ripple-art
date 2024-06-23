@@ -48,24 +48,13 @@
             }
         }
 
-        #colorPicker {
+        #colorSwatch {
             width: 24px;
             height: 24px;
             border-radius: 50%;
             border: none;
             cursor: pointer;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-
-        #colorPicker::-webkit-color-swatch {
-            border-radius: 50%;
-            border: none;
-        }
-
-        #colorPicker::-moz-color-swatch {
-            border-radius: 50%;
-            border: none;
+            background-color: #0096ff;
         }
 
         .header-logo {
@@ -115,6 +104,28 @@
             border-bottom-width: 0rem;
             transform: scale(0.95);
         }
+
+        .color-picker-popup {
+            position: absolute;
+            bottom: 3rem;
+            display: none;
+            padding: 0.5rem;
+            border: 1px solid #e1e1e1;
+            border-radius: 0.25rem;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            grid-template-columns: repeat(6, auto);
+            gap: 0.25rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .color-picker-popup div {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -125,24 +136,42 @@
         <div class="button-container">
             <button class="fancy-button" id="colorPickerButton"
                 style="width: fit-content; background-color: #fff; border-color: #000;">
-                <input type="color" id="colorPicker" value="#0096ff">
+                <div id="colorSwatch"></div>
             </button>
+            <div class="color-picker-popup" id="colorPickerPopup">
+                <div style="background-color: #ff5733;" data-color="#ff5733"></div>
+                <div style="background-color: #e85d04;" data-color="#e85d04"></div>
+                <div style="background-color: #faa307;" data-color="#faa307"></div>
+                <div style="background-color: #ff33a8;" data-color="#ff33a8"></div>
+                <div style="background-color: #ffd166;" data-color="#ffd166"></div>
+                <div style="background-color: #bc4749;" data-color="#bc4749"></div>
+                <div style="background-color: #a7c957;" data-color="#a7c957"></div>
+                <div style="background-color: #6a994e;" data-color="#6a994e"></div>
+                <div style="background-color: #52796f;" data-color="#52796f"></div>
+                <div style="background-color: #2ec4b6;" data-color="#2ec4b6"></div>
+                <div style="background-color: #0096ff;" data-color="#0096ff"></div>
+                <div style="background-color: #003049;" data-color="#003049"></div>
+            </div>
         </div>
     </div>
 
     <script>
         let rippleColor = '#0096ff';
 
-        document.getElementById('colorPickerButton').addEventListener('click', function () {
-            document.getElementById('colorPicker').click();
+        document.getElementById('colorPickerButton').addEventListener('click', function (event) {
+            const colorPickerPopup = document.getElementById('colorPickerPopup');
+            colorPickerPopup.style.display = colorPickerPopup.style.display === 'grid' ? 'none' : 'grid';
+            event.stopPropagation();
         });
 
-        document.getElementById('colorPicker').addEventListener('input', function (e) {
-            rippleColor = e.target.value;
-            document.getElementById('colorPicker').style.backgroundColor = rippleColor;
+        document.getElementById('colorPickerPopup').addEventListener('click', function (e) {
+            if (e.target.dataset.color) {
+                rippleColor = e.target.dataset.color;
+                document.getElementById('colorSwatch').style.backgroundColor = rippleColor;
+                document.getElementById('colorPickerPopup').style.display = 'none';
+            }
+            e.stopPropagation();
         });
-
-        document.getElementById('colorPicker').style.backgroundColor = rippleColor;
 
         document.getElementById('container').addEventListener('click', function (e) {
             const container = e.currentTarget;
@@ -159,6 +188,19 @@
                 container.removeChild(ripple);
             });
         });
+
+        document.addEventListener('click', function () {
+            const colorPickerPopup = document.getElementById('colorPickerPopup');
+            colorPickerPopup.style.display = 'none';
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                const colorPickerPopup = document.getElementById('colorPickerPopup');
+                colorPickerPopup.style.display = 'none';
+            }
+        });
+
     </script>
 </body>
 
