@@ -144,7 +144,8 @@
             opacity: 1;
         }
 
-        @media (max-width: 768px) {
+        /* Hide tooltips on touch devices */
+        @media (hover: none) and (pointer: coarse) {
             .tooltip {
                 display: none;
             }
