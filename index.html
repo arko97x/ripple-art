@@ -327,8 +327,20 @@
                 el.style.visibility = 'hidden';
             });
 
-            // Take the screenshot
-            domtoimage.toBlob(document.body)
+            // Scale factor for higher resolution
+            const scale = 5;
+
+            // Take the screenshot with scaling
+            domtoimage.toBlob(document.body, {
+                width: document.body.clientWidth * scale,
+                height: document.body.clientHeight * scale,
+                style: {
+                    transform: `scale(${scale})`,
+                    transformOrigin: 'top left',
+                    width: document.body.clientWidth + 'px',
+                    height: document.body.clientHeight + 'px'
+                }
+            })
                 .then(function (blob) {
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(blob);
