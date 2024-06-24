@@ -207,6 +207,95 @@
             border-radius: 50%;
             cursor: pointer;
         }
+
+        .dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            font-family: monospace;
+        }
+
+        .dialog.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .dialog-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.35);
+            cursor: pointer;
+        }
+
+        .dialog-content {
+            position: relative;
+            background-color: white;
+            /* padding: 20px; */
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            transform: scale(0.5);
+            transition: transform 0.3s ease;
+            max-width: 85%;
+        }
+
+        @media (min-width: 768px) {
+            .dialog-content {
+                max-width: 40%;
+            }
+        }
+
+        .dialog.show .dialog-content {
+            transform: scale(1);
+        }
+
+        .dialog-close {
+            position: absolute;
+            top: 15px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+            color: #000;
+            font-weight: 100;
+            line-height: 30px;
+            border-radius: 4px;
+        }
+
+        .dialog-close:hover {
+            color: #fff;
+            background-color: #000;
+        }
+
+        .dialog-title {
+            padding-left: 20px;
+            padding-right: 20px;
+            font-size: 18px;
+            color: #101828;
+            margin: 0;
+            margin-bottom: 20px;
+        }
+
+        .dialog-body {
+            padding-left: 20px;
+            padding-right: 20px;
+            font-size: 14px;
+            color: #475467;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 
@@ -261,12 +350,31 @@
             </button>
             <div class="tooltip">Take a screenshot</div>
         </div>
-        <div class="button-container" style="margin-left: 1rem;">
+        <div class="button-container" id="aboutButtonContainer" style="margin-left: 1rem;">
             <button class="fancy-button" id="aboutButton"
                 style="width: fit-content; background-color: #fff; border-color: #000;">
                 <img src="about.svg" alt="about button">
             </button>
             <div class="tooltip">About Ripple-Art</div>
+            <!-- About Ripple-Art Dialog -->
+            <div class="dialog" id="aboutDialog">
+                <div class="dialog-overlay" id="dialogOverlay"></div>
+                <div class="dialog-content">
+                    <button class="dialog-close" id="closeDialogButton">&times;</button>
+                    <h2 class="dialog-title">About Ripple-Art</h2>
+                    <hr style="border: 0.5px solid #e1e1e1; margin-bottom: 20px;" />
+                    <p class="dialog-body">
+                        Ripple-Art is <span style="font-style: italic;">an-almost</span> weekend
+                        project by <span style="color: #101828; font-weight: 800;">Arkoprabho Bhattacharjee
+                            (arccc.co)</span>.<br /><br />It's meant to be a canvas that
+                        promotes the creation of art <span style="font-style: italic; font-weight: 800;">(read: I was
+                            bored out of my mind over the weekend).</span><br /><br />But, in all honesty, this was
+                        definitely a lot of fun to build. Hope you have fun playing around with it
+                        too.<br /><br />Tap/click away!<br /><br />P.S: Best enjoyed on a desktop.<br />P.P.S: Click/tap
+                        <span style="font-style: italic; font-weight: 800;">multiple times</span> for multiple ripples!
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -434,6 +542,26 @@
                     });
                 });
         });
+
+        document.getElementById('aboutButton').addEventListener('click', function () {
+            document.getElementById('aboutButtonContainer').children[1].style.visibility = 'hidden';
+            const dialog = document.getElementById('aboutDialog');
+            dialog.style.display = 'flex';
+            setTimeout(() => {
+                dialog.classList.add('show');
+            }, 10);  // Small timeout to ensure the transition applies correctly
+        });
+
+        function closeDialog() {
+            const dialog = document.getElementById('aboutDialog');
+            dialog.classList.remove('show');
+            setTimeout(() => {
+                dialog.style.display = 'none';
+            }, 100);
+        }
+
+        document.getElementById('closeDialogButton').addEventListener('click', closeDialog);
+        document.getElementById('dialogOverlay').addEventListener('click', closeDialog);
     </script>
 </body>
 
