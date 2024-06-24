@@ -320,15 +320,33 @@
         });
 
         document.getElementById('screenshotButton').addEventListener('click', function () {
-            domtoimage.toBlob(document.getElementById('container'))
+            // Elements to exclude from the screenshot
+            const elementsToExclude = document.querySelectorAll('.footer');
+            // Hide the elements momentarily
+            elementsToExclude.forEach(el => {
+                el.style.visibility = 'hidden';
+            });
+
+            // Take the screenshot
+            domtoimage.toBlob(document.body)
                 .then(function (blob) {
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(blob);
                     link.download = 'ripple-art.png';
                     link.click();
+
+                    // Restore the visibility of excluded elements
+                    elementsToExclude.forEach(el => {
+                        el.style.visibility = 'visible';
+                    });
                 })
                 .catch(function (error) {
-                    console.error('Oops, something went wrong!', error);
+                    console.error('Screenshot capture failed:', error);
+
+                    // Restore the visibility of excluded elements in case of an error
+                    elementsToExclude.forEach(el => {
+                        el.style.visibility = 'visible';
+                    });
                 });
         });
     </script>
