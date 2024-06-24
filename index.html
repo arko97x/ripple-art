@@ -69,11 +69,35 @@
             vertical-align: middle;
         }
 
-        .header-logo {
+        .header {
             position: absolute;
             top: 2rem;
             left: 4rem;
             z-index: 10;
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            font-family: monospace;
+        }
+
+        .promo-pill {
+            margin-top: 0.75rem;
+            margin-left: 0.125rem;
+            width: 100%;
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            text-align: center;
+            background-color: #000;
+            color: #fff;
+            border: 1px solid transparent;
+            text-decoration: none;
+        }
+
+        .promo-pill:hover {
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #000;
         }
 
         .footer {
@@ -81,7 +105,6 @@
             bottom: 2rem;
             padding: 0.625rem 1rem;
             border: 1px solid #e1e1e1;
-            border-radius: 0.25rem;
             background-color: #fff;
             display: flex;
             flex-direction: row;
@@ -151,7 +174,10 @@
 </head>
 
 <body>
-    <img class="header-logo" src="rippleArt-logo.svg" alt="ripple-art's logo" height="32">
+    <div class="header">
+        <img src="rippleArt-logo.svg" alt="ripple-art's logo" height="32">
+        <a class="promo-pill" href="https://arccc.co" target="_blank">by arccc.co</a>
+    </div>
     <div id="container"></div>
     <div class="footer">
         <div class="button-container">
