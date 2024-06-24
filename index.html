@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ripple art —— make art with ripple animations</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <style>
         body,
         html {
@@ -26,6 +27,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: #fff;
+            z-index: 0;
         }
 
         .ripple {
@@ -70,6 +73,7 @@
             position: absolute;
             top: 2rem;
             left: 4rem;
+            z-index: 10;
         }
 
         .footer {
@@ -184,6 +188,12 @@
                     style="cursor: pointer;">
                 <img class="shape" src="square.svg" data-shape="square" alt="square shape" style="cursor: pointer;">
             </div>
+        </div>
+        <div class="button-container" style="margin-left: 1rem;">
+            <button class="fancy-button" id="screenshotButton"
+                style="width: fit-content; background-color: #fff; border-color: #000;">
+                <img src="screenshot.svg" alt="screenshot button">
+            </button>
         </div>
     </div>
 
@@ -309,6 +319,18 @@
             }
         });
 
+        document.getElementById('screenshotButton').addEventListener('click', function () {
+            domtoimage.toBlob(document.getElementById('container'))
+                .then(function (blob) {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'ripple-art.png';
+                    link.click();
+                })
+                .catch(function (error) {
+                    console.error('Oops, something went wrong!', error);
+                });
+        });
     </script>
 </body>
 
