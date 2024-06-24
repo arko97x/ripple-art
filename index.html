@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ripple art —— make art with ripple animations</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <style>
         body,
@@ -117,13 +118,37 @@
             align-items: center;
             justify-content: center;
             background-color: transparent;
+            position: relative;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            width: max-content;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 105%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+            font-family: monospace;
+        }
+
+        .button-container:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
         }
 
         .fancy-button {
             font-family: monospace;
             padding: 0.5rem 0.875rem;
             color: #000;
-            border-radius: 0.5rem;
+            border-radius: 0.35rem;
             border-left: 0.0625rem solid;
             border-right: 0.0625rem solid;
             border-top: 0.0625rem solid;
@@ -185,6 +210,7 @@
                 style="width: fit-content; background-color: #fff; border-color: #000;">
                 <div id="colorSwatch"></div>
             </button>
+            <div class="tooltip">Pick a color</div>
             <div class="color-picker-popup" id="colorPickerPopup">
                 <div style="background-color: #ff5733;" data-color="#ff5733"></div>
                 <div style="background-color: #e85d04;" data-color="#e85d04"></div>
@@ -206,6 +232,7 @@
                 style="width: fit-content; background-color: #fff; border-color: #000;">
                 <img id="shapeSwatch" class="shape" src="circle.svg" alt="shape swatch">
             </button>
+            <div class="tooltip">Pick a shape</div>
             <div class="shape-picker-popup" id="shapePickerPopup">
                 <img class="shape" src="circle.svg" data-shape="circle" alt="circle shape" style="cursor: pointer;">
                 <img class="shape" src="pentagon.svg" data-shape="pentagon" alt="pentagon shape"
@@ -220,6 +247,7 @@
                 style="width: fit-content; background-color: #fff; border-color: #000;">
                 <img src="screenshot.svg" alt="screenshot button">
             </button>
+            <div class="tooltip">Take a screenshot</div>
         </div>
     </div>
 
@@ -347,7 +375,7 @@
 
         document.getElementById('screenshotButton').addEventListener('click', function () {
             // Elements to exclude from the screenshot
-            const elementsToExclude = document.querySelectorAll('.footer');
+            const elementsToExclude = document.querySelectorAll('.footer, .tooltip');
             // Hide the elements momentarily
             elementsToExclude.forEach(el => {
                 el.style.visibility = 'hidden';
