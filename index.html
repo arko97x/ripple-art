@@ -364,6 +364,13 @@
                     <h2 class="dialog-title">About Ripple-Art</h2>
                     <hr style="border: 0.5px solid #e1e1e1; margin-bottom: 20px;" />
                     <p class="dialog-body">
+                        <video id="singleTapVideo" width="75" height="75" autoplay muted>
+                            <source src="singleTap.mp4" type="video/mp4">
+                        </video>
+                        <video id="multiTapVideo" width="75" height="75" autoplay muted>
+                            <source src="multiTap.mp4" type="video/mp4">
+                        </video>
+                        <br />
                         Ripple-Art is <span style="font-style: italic;">an-almost</span> weekend
                         project by <span style="color: #101828; font-weight: 800;">Arkoprabho Bhattacharjee
                             (arccc.co)</span>.<br /><br />It's meant to be a canvas that
@@ -379,6 +386,20 @@
     </div>
 
     <script>
+        // Delaying autoplaying-loop of tutorial animations
+        var singleTapVideo = document.getElementById('singleTapVideo');
+        var multiTapVideo = document.getElementById('multiTapVideo');
+        singleTapVideo.addEventListener('ended', function () {
+            setTimeout(function () {
+                singleTapVideo.play();
+            }, 1500);
+        });
+        multiTapVideo.addEventListener('ended', function () {
+            setTimeout(function () {
+                multiTapVideo.play();
+            }, 1710);
+        });
+
         let rippleColor = '#0096ff';
         let rippleShape = 'circle';
 
