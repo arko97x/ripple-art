@@ -104,9 +104,10 @@
         .footer {
             position: absolute;
             bottom: 2rem;
-            padding: 0.625rem 1rem;
+            padding: 0.825rem 1rem;
             border: 1px solid #e1e1e1;
             background-color: #fff;
+            border-radius: 0.5rem;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -119,24 +120,6 @@
             justify-content: center;
             background-color: transparent;
             position: relative;
-        }
-
-        .tooltip {
-            visibility: hidden;
-            width: max-content;
-            background-color: #000;
-            color: #fff;
-            text-align: center;
-            padding: 4px 12px 4px 12px;
-            position: absolute;
-            z-index: 1;
-            bottom: 102%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            white-space: nowrap;
-            font-family: monospace;
         }
 
         .button-container:hover .tooltip {
@@ -153,11 +136,11 @@
 
         .fancy-button {
             font-family: monospace;
-            padding: 0.5rem 0.875rem;
+            padding: 0.5rem 0.65rem;
             color: #000;
             border-radius: 0.35rem;
-            border-bottom-left-radius: 0.5rem;
-            border-bottom-right-radius: 0.5rem;
+            border-bottom-left-radius: 0.45rem;
+            border-bottom-right-radius: 0.45rem;
             border-left: 0.0625rem solid;
             border-right: 0.0625rem solid;
             border-top: 0.0625rem solid;
@@ -177,6 +160,24 @@
         .fancy-button:active {
             border-bottom-width: 0rem;
             transform: scale(0.95);
+        }
+
+        .tooltip {
+            visibility: hidden;
+            width: max-content;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 4px 12px 4px 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 102%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+            font-family: monospace;
         }
 
         .color-picker-popup,
