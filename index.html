@@ -6,298 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ripple art —— make art with ripple animations</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
-    <style>
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #fff;
-        }
-
-        #container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff;
-            z-index: 0;
-        }
-
-        .ripple {
-            position: absolute;
-            pointer-events: none;
-            animation: ripple-animation 2s linear infinite;
-        }
-
-        @keyframes ripple-animation {
-            from {
-                transform: scale(0);
-                opacity: 1;
-            }
-
-            to {
-                transform: scale(2);
-                opacity: 0;
-            }
-        }
-
-        #colorSwatch {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: #0096ff;
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        #shapeSwatch {
-            width: 24px;
-            height: 24px;
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        .header {
-            position: absolute;
-            top: 2rem;
-            left: 4rem;
-            z-index: 10;
-            width: fit-content;
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            font-family: monospace;
-        }
-
-        .promo-pill {
-            margin-top: 0.75rem;
-            margin-left: 0.125rem;
-            width: 100%;
-            padding-top: 0.25rem;
-            padding-bottom: 0.25rem;
-            text-align: center;
-            background-color: #000;
-            color: #fff;
-            border: 1px solid transparent;
-            text-decoration: none;
-        }
-
-        .promo-pill:hover {
-            background-color: #fff;
-            color: #000;
-            border: 1px solid #000;
-        }
-
-        .footer {
-            position: absolute;
-            bottom: 2rem;
-            padding: 0.825rem 1rem;
-            border: 1px solid #e1e1e1;
-            background-color: #fff;
-            border-radius: 0.5rem;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-
-        .button-container {
-            min-height: 3.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: transparent;
-            position: relative;
-        }
-
-        .button-container:hover .tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        /* Hide tooltips on touch devices */
-        @media (hover: none) and (pointer: coarse) {
-            .tooltip {
-                display: none;
-            }
-        }
-
-        .fancy-button {
-            font-family: monospace;
-            padding: 0.5rem 0.65rem;
-            color: #000;
-            border-radius: 0.35rem;
-            border-bottom-left-radius: 0.45rem;
-            border-bottom-right-radius: 0.45rem;
-            border-left: 0.0625rem solid;
-            border-right: 0.0625rem solid;
-            border-top: 0.0625rem solid;
-            border-bottom: 0.375rem solid;
-            cursor: pointer;
-            transition: border-bottom-width 0.1s, transform 0.1s;
-            display: flex;
-            align-items: center;
-        }
-
-        .fancy-button:hover {
-            border-bottom-width: 0.125rem;
-            border-bottom-left-radius: 0.35rem;
-            border-bottom-right-radius: 0.35rem;
-        }
-
-        .fancy-button:active {
-            border-bottom-width: 0rem;
-            transform: scale(0.95);
-        }
-
-        .tooltip {
-            visibility: hidden;
-            width: max-content;
-            background-color: #000;
-            color: #fff;
-            text-align: center;
-            padding: 4px 12px 4px 12px;
-            position: absolute;
-            z-index: 1;
-            bottom: 102%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            white-space: nowrap;
-            font-family: monospace;
-        }
-
-        .color-picker-popup,
-        .shape-picker-popup {
-            position: absolute;
-            bottom: 3rem;
-            display: none;
-            padding: 0.5rem;
-            border: 1px solid #e1e1e1;
-            border-radius: 0.25rem;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            grid-template-columns: repeat(6, auto);
-            gap: 0.25rem;
-            justify-content: center;
-            align-items: center;
-            z-index: 2;
-        }
-
-        .shape-picker-popup {
-            grid-template-columns: repeat(4, auto);
-        }
-
-        .color-picker-popup div,
-        .shape-picker-popup div {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .dialog {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.15s ease;
-            font-family: monospace;
-        }
-
-        .dialog.show {
-            display: flex;
-            opacity: 1;
-        }
-
-        .dialog-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.35);
-            cursor: pointer;
-        }
-
-        .dialog-content {
-            position: relative;
-            background-color: white;
-            /* padding: 20px; */
-            padding-top: 20px;
-            padding-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-            transform: scale(0.5);
-            transition: transform 0.3s ease;
-            max-width: 85%;
-        }
-
-        @media (min-width: 768px) {
-            .dialog-content {
-                max-width: 40%;
-            }
-        }
-
-        .dialog.show .dialog-content {
-            transform: scale(1);
-        }
-
-        .dialog-close {
-            position: absolute;
-            top: 15px;
-            right: 12px;
-            background: none;
-            border: none;
-            font-size: 32px;
-            cursor: pointer;
-            color: #000;
-            font-weight: 100;
-            line-height: 30px;
-            border-radius: 4px;
-        }
-
-        .dialog-close:hover {
-            color: #fff;
-            background-color: #000;
-        }
-
-        .dialog-title {
-            padding-left: 20px;
-            padding-right: 20px;
-            font-size: 18px;
-            color: #101828;
-            margin: 0;
-            margin-bottom: 20px;
-        }
-
-        .dialog-body {
-            padding-left: 20px;
-            padding-right: 20px;
-            font-size: 14px;
-            color: #475467;
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -305,8 +14,11 @@
         <img src="rippleArt-logo.svg" alt="ripple-art's logo" height="32">
         <a class="promo-pill" href="https://arccc.co" target="_blank">by arccc.co</a>
     </div>
+
     <div id="container"></div>
+
     <div class="footer">
+        <!-- Color Swatch Button -->
         <div class="button-container">
             <button class="fancy-button" id="colorPickerButton"
                 style="width: fit-content; background-color: #fff; border-color: #000;">
@@ -328,6 +40,7 @@
                 <div style="background-color: #003049;" data-color="#003049"></div>
             </div>
         </div>
+
         <!-- Shape Swatch Button -->
         <div class="button-container" style="margin-left: 1rem;">
             <button class="fancy-button" id="shapePickerButton"
@@ -344,6 +57,8 @@
                 <img class="shape" src="square.svg" data-shape="square" alt="square shape" style="cursor: pointer;">
             </div>
         </div>
+
+        <!-- Screenshot Button -->
         <div class="button-container" style="margin-left: 1rem;">
             <button class="fancy-button" id="screenshotButton"
                 style="width: fit-content; background-color: #fff; border-color: #000;">
@@ -351,6 +66,8 @@
             </button>
             <div class="tooltip">Take a screenshot</div>
         </div>
+
+        <!-- About Button -->
         <div class="button-container" id="aboutButtonContainer" style="margin-left: 1rem;">
             <button class="fancy-button" id="aboutButton"
                 style="width: fit-content; background-color: #fff; border-color: #000;">
@@ -386,205 +103,8 @@
         </div>
     </div>
 
-    <script>
-        // Delaying autoplaying-loop of tutorial animations
-        var singleTapVideo = document.getElementById('singleTapVideo');
-        var multiTapVideo = document.getElementById('multiTapVideo');
-        singleTapVideo.addEventListener('ended', function () {
-            setTimeout(function () {
-                singleTapVideo.play();
-            }, 1500);
-        });
-        multiTapVideo.addEventListener('ended', function () {
-            setTimeout(function () {
-                multiTapVideo.play();
-            }, 1710);
-        });
-
-        let rippleColor = '#0096ff';
-        let rippleShape = 'circle';
-
-        document.getElementById('colorPickerButton').addEventListener('click', function (event) {
-            const colorPickerPopup = document.getElementById('colorPickerPopup');
-            const shapePickerPopup = document.getElementById('shapePickerPopup');
-            shapePickerPopup.style.display = 'none'; // Close shape picker popup if open
-            colorPickerPopup.style.display = colorPickerPopup.style.display === 'grid' ? 'none' : 'grid';
-            event.stopPropagation();
-        });
-
-        document.getElementById('colorPickerPopup').addEventListener('click', function (e) {
-            if (e.target.dataset.color) {
-                rippleColor = e.target.dataset.color;
-                document.getElementById('colorSwatch').style.backgroundColor = rippleColor;
-                document.getElementById('colorPickerPopup').style.display = 'none';
-            }
-            e.stopPropagation();
-        });
-
-        document.getElementById('shapePickerButton').addEventListener('click', function (event) {
-            const shapePickerPopup = document.getElementById('shapePickerPopup');
-            const colorPickerPopup = document.getElementById('colorPickerPopup');
-            colorPickerPopup.style.display = 'none'; // Close color picker popup if open
-            shapePickerPopup.style.display = shapePickerPopup.style.display === 'grid' ? 'none' : 'grid';
-            event.stopPropagation();
-        });
-
-        document.getElementById('shapePickerPopup').addEventListener('click', function (e) {
-            if (e.target.dataset.shape) {
-                rippleShape = e.target.dataset.shape;
-                let shapeSwatchSrc;
-                if (rippleShape === 'circle') {
-                    shapeSwatchSrc = 'circle.svg';
-                } else if (rippleShape === 'pentagon') {
-                    shapeSwatchSrc = 'pentagon.svg';
-                } else if (rippleShape === 'triangle') {
-                    shapeSwatchSrc = 'triangle.svg';
-                } else if (rippleShape === 'square') {
-                    shapeSwatchSrc = 'square.svg';
-                }
-                document.getElementById('shapeSwatch').src = shapeSwatchSrc;
-                document.getElementById('shapePickerPopup').style.display = 'none';
-            }
-            e.stopPropagation();
-        });
-
-        document.getElementById('container').addEventListener('click', function (e) {
-            const container = e.currentTarget;
-            const ripple = document.createElement('div');
-            ripple.className = 'ripple';
-            ripple.style.left = `${e.clientX - 50}px`;
-            ripple.style.top = `${e.clientY - 50}px`;
-
-            const svgNS = "http://www.w3.org/2000/svg";
-            const svg = document.createElementNS(svgNS, "svg");
-            svg.setAttribute("width", "104");
-            svg.setAttribute("height", "104");
-
-            if (rippleShape === 'circle') {
-                const circle = document.createElementNS(svgNS, "circle");
-                circle.setAttribute("cx", "52");
-                circle.setAttribute("cy", "52");
-                circle.setAttribute("r", "50");
-                circle.setAttribute("fill", "none");
-                circle.setAttribute("stroke", rippleColor);
-                circle.setAttribute("stroke-width", "2");
-                svg.appendChild(circle);
-            } else if (rippleShape === 'pentagon') {
-                const pentagon = document.createElementNS(svgNS, "polygon");
-                pentagon.setAttribute("points", "50,0 100,38 82,100 18,100 0,38");
-                pentagon.setAttribute("fill", "none");
-                pentagon.setAttribute("stroke", rippleColor);
-                pentagon.setAttribute("stroke-width", "2");
-                svg.appendChild(pentagon);
-            } else if (rippleShape === 'triangle') {
-                const triangle = document.createElementNS(svgNS, "polygon");
-                triangle.setAttribute("points", "50,20 80,70 20,70");
-                triangle.setAttribute("fill", "none");
-                triangle.setAttribute("stroke", rippleColor);
-                triangle.setAttribute("stroke-width", "2");
-                svg.appendChild(triangle);
-            } else if (rippleShape === 'square') {
-                svg.setAttribute("width", "100");
-                svg.setAttribute("height", "100");
-
-                const square = document.createElementNS(svgNS, "rect");
-                square.setAttribute("x", "0");
-                square.setAttribute("y", "0");
-                square.setAttribute("width", "100");
-                square.setAttribute("height", "100");
-                square.setAttribute("fill", "none");
-                square.setAttribute("stroke", rippleColor);
-                square.setAttribute("stroke-width", "2");
-                svg.appendChild(square);
-            }
-
-            ripple.appendChild(svg);
-            container.appendChild(ripple);
-
-            ripple.addEventListener('animationend', function () {
-                container.removeChild(ripple);
-            });
-        });
-
-        document.addEventListener('click', function () {
-            const colorPickerPopup = document.getElementById('colorPickerPopup');
-            const shapePickerPopup = document.getElementById('shapePickerPopup');
-            colorPickerPopup.style.display = 'none';
-            shapePickerPopup.style.display = 'none';
-        });
-
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                const colorPickerPopup = document.getElementById('colorPickerPopup');
-                const shapePickerPopup = document.getElementById('shapePickerPopup');
-                colorPickerPopup.style.display = 'none';
-                shapePickerPopup.style.display = 'none';
-            }
-        });
-
-        document.getElementById('screenshotButton').addEventListener('click', function () {
-            // Elements to exclude from the screenshot
-            const elementsToExclude = document.querySelectorAll('.footer, .tooltip');
-            // Hide the elements momentarily
-            elementsToExclude.forEach(el => {
-                el.style.visibility = 'hidden';
-            });
-
-            // Scale factor for higher resolution
-            const scale = 5;
-
-            // Take the screenshot with scaling
-            domtoimage.toBlob(document.body, {
-                width: document.body.clientWidth * scale,
-                height: document.body.clientHeight * scale,
-                style: {
-                    transform: `scale(${scale})`,
-                    transformOrigin: 'top left',
-                    width: document.body.clientWidth + 'px',
-                    height: document.body.clientHeight + 'px'
-                }
-            })
-                .then(function (blob) {
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = 'ripple-art.png';
-                    link.click();
-
-                    // Restore the visibility of excluded elements
-                    elementsToExclude.forEach(el => {
-                        el.style.visibility = 'visible';
-                    });
-                })
-                .catch(function (error) {
-                    console.error('Screenshot capture failed:', error);
-
-                    // Restore the visibility of excluded elements in case of an error
-                    elementsToExclude.forEach(el => {
-                        el.style.visibility = 'visible';
-                    });
-                });
-        });
-
-        document.getElementById('aboutButton').addEventListener('click', function () {
-            document.getElementById('aboutButtonContainer').children[1].style.visibility = 'hidden';
-            const dialog = document.getElementById('aboutDialog');
-            dialog.style.display = 'flex';
-            setTimeout(() => {
-                dialog.classList.add('show');
-            }, 10);  // Small timeout to ensure the transition applies correctly
-        });
-
-        function closeDialog() {
-            const dialog = document.getElementById('aboutDialog');
-            dialog.classList.remove('show');
-            setTimeout(() => {
-                dialog.style.display = 'none';
-            }, 100);
-        }
-
-        document.getElementById('closeDialogButton').addEventListener('click', closeDialog);
-        document.getElementById('dialogOverlay').addEventListener('click', closeDialog);
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
