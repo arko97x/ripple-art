@@ -176,22 +176,24 @@ document.getElementById('screenshotButton').addEventListener('click', function (
         });
 });
 
+const dOverlay = document.getElementById('dialogOverlay');
+const dContainer = document.getElementById('dialogContainer');
+
 document.getElementById('aboutButton').addEventListener('click', function () {
-    document.getElementById('aboutButtonContainer').children[1].style.visibility = 'hidden';
-    const dialog = document.getElementById('aboutDialog');
-    dialog.style.display = 'flex';
+    dOverlay.style.display = 'block';
+    dContainer.style.display = 'flex';
     setTimeout(() => {
-        dialog.classList.add('show');
+        dContainer.classList.add('show');
     }, 10);  // Small timeout to ensure the transition applies correctly
 });
 
 function closeDialog() {
-    const dialog = document.getElementById('aboutDialog');
-    dialog.classList.remove('show');
+    dOverlay.style.display = 'none';
+    dContainer.classList.remove('show');
     setTimeout(() => {
-        dialog.style.display = 'none';
-    }, 100);
+        dContainer.style.display = 'none';
+    }, 150);
 }
 
+dOverlay.addEventListener('click', closeDialog);
 document.getElementById('closeDialogButton').addEventListener('click', closeDialog);
-document.getElementById('dialogOverlay').addEventListener('click', closeDialog);

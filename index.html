@@ -74,32 +74,104 @@
                 <img src="about.svg" alt="about button">
             </button>
             <div class="tooltip">About Ripple-Art</div>
-            <!-- About Ripple-Art Dialog -->
-            <div class="dialog" id="aboutDialog">
-                <div class="dialog-overlay" id="dialogOverlay"></div>
-                <div class="dialog-content">
-                    <button class="dialog-close" id="closeDialogButton">&times;</button>
-                    <h2 class="dialog-title">About Ripple-Art</h2>
-                    <hr style="border: 0.5px solid #e1e1e1; margin-bottom: 20px;" />
-                    <p class="dialog-body">
-                        <video id="singleTapVideo" width="75" height="75" autoplay muted>
+        </div>
+    </div>
+
+    <!--  Dialog code starts here -->
+    <div class="dialog-overlay" id="dialogOverlay"></div>
+
+    <div class="dialog-container" id="dialogContainer">
+        <div class="dialog-header">
+            <div class="header-text">Hola!&nbsp;👋🏾</div>
+            <div class="close-button" id="closeDialogButton">
+                <img class="close-icon" src="xIcon.svg" />
+            </div>
+        </div>
+
+        <div class="dialog-text-only">
+            Create art with <span class="bold-italic">ripples</span> —— of different <span class="bold-italic">shapes &
+                colours</span>.
+        </div>
+
+        <div class="dialog-divider"></div>
+
+        <div class="dialog-text-plus-media">
+            <div class="dialog-text">Tip:</div>
+
+            <div class="dialog-card-container">
+                <div class="dialog-card">
+                    <div class="dialog-mediaContainer">
+                        <video class="media-video" id="singleTapVideo" autoplay muted>
                             <source src="singleTap.mp4" type="video/mp4">
                         </video>
-                        <video id="multiTapVideo" width="75" height="75" autoplay muted>
+                    </div>
+
+                    <div class="dialog-mediaText">Tap once for a single ripple</div>
+                </div>
+
+                <div class="dialog-card">
+                    <div class="dialog-mediaContainer">
+                        <video class="media-video" id="multiTapVideo" autoplay muted>
                             <source src="multiTap.mp4" type="video/mp4">
                         </video>
-                        <br />
-                        Ripple-Art is <span style="font-style: italic;">an-almost</span> weekend
-                        project by <span style="color: #101828; font-weight: 800;">Arkoprabho Bhattacharjee
-                            (arccc.co)</span>.<br /><br />It's meant to be a canvas that
-                        promotes the creation of art <span style="font-style: italic; font-weight: 800;">(read: I was
-                            bored out of my mind over the weekend).</span><br /><br />But, in all honesty, this was
-                        definitely a lot of fun to build. Hope you have fun playing around with it
-                        too.<br /><br />Tap/click away!<br /><br />P.S: Best enjoyed on a desktop.<br />P.P.S: Click/tap
-                        <span style="font-style: italic; font-weight: 800;">multiple times</span> for multiple ripples!
-                    </p>
+                    </div>
+
+                    <div class="dialog-mediaText">Tap many times for many ripples</div>
                 </div>
             </div>
+        </div>
+
+        <div class="dialog-text-plus-media" style="padding-bottom: 20px;">
+            <div class="dialog-text">Customize your ripples by:</div>
+
+            <div class="dialog-card-container">
+                <div class="dialog-card">
+                    <div class="dialog-mediaContainer">
+                        <img class="media-image" src="colourSwatch.svg" />
+                    </div>
+
+                    <div class="dialog-mediaText">Changing their colour</div>
+                </div>
+
+                <div class="dialog-card">
+                    <div class="dialog-mediaContainer">
+                        <img class="media-image" src="shapeSwatch.svg" />
+                    </div>
+
+                    <div class="dialog-mediaText">Changing their shape</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dialog-divider"></div>
+
+        <div class="dialog-text-plus-media" style="padding-bottom: 20px;">
+            <div class="dialog-text">You may also:</div>
+
+            <div class="dialog-card-container">
+                <div class="dialog-card">
+                    <div class="dialog-mediaContainer">
+                        <img class="media-image" src="screenshotBtn.svg" />
+                    </div>
+
+                    <div class="dialog-mediaText">Take a screenshot of your art</div>
+                </div>
+
+                <div class="dialog-card">
+                    <div class="dialog-mediaContainer">
+                        <img class="media-image" src="aboutBtn.svg" />
+                    </div>
+
+                    <div class="dialog-mediaText">Read more about the project</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dialog-divider"></div>
+
+        <div class="dialog-text-only">
+            Share your art with me/tag me on <span class="bold-italic"><a href="https://www.instagram.com/arccc.co/"
+                    target="_blank" class="link">Instagram (@arccc.co)</a></span>. That would make me really happy! ^_^
         </div>
     </div>
 
