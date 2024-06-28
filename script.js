@@ -7,9 +7,14 @@ document.body.addEventListener('touchstart', function () {
     var multiTapVideo = document.getElementById('multiTapVideo');
 
     if (isSafari) {
-        singleTapVideo.play();
-        multiTapVideo.play();
+        singleTapVideo.setAttribute('playsinline', '');
+        multiTapVideo.setAttribute('playsinline', '');
+        singleTapVideo.setAttribute('webkit-playsinline', '');
+        multiTapVideo.setAttribute('webkit-playsinline', '');
     }
+
+    singleTapVideo.play();
+    multiTapVideo.play();
 
     singleTapVideo.addEventListener('ended', function () {
         setTimeout(function () {
