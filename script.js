@@ -1,3 +1,29 @@
+// Detect Safari
+var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+console.log(isSafari);
+
+document.body.addEventListener('touchstart', function () {
+    var singleTapVideo = document.getElementById('singleTapVideo');
+    var multiTapVideo = document.getElementById('multiTapVideo');
+
+    if (isSafari) {
+        singleTapVideo.play();
+        multiTapVideo.play();
+    }
+
+    singleTapVideo.addEventListener('ended', function () {
+        setTimeout(function () {
+            singleTapVideo.play();
+        }, 1500);
+    });
+
+    multiTapVideo.addEventListener('ended', function () {
+        setTimeout(function () {
+            multiTapVideo.play();
+        }, 1710);
+    });
+}, { once: true });
+
 // Delaying autoplaying-loop of tutorial animations
 var singleTapVideo = document.getElementById('singleTapVideo');
 var multiTapVideo = document.getElementById('multiTapVideo');
