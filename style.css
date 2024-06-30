@@ -214,7 +214,8 @@ html {
     display: none;
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
     flex-direction: column;
     width: 85%;
     height: fit-content;
@@ -226,11 +227,23 @@ html {
     opacity: 0;
     transition: opacity 0.15s ease;
     z-index: 11;
+    animation: none;
 }
 
 .dialog-container.show {
     display: flex;
     opacity: 1;
+    animation: scaleUp 0.35s ease forwards;
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
 
 @media (min-width: 640px) {
