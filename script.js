@@ -1,4 +1,4 @@
-// Detect Safari
+// To detect Safari browser
 var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 document.body.addEventListener('touchstart', function () {
@@ -15,6 +15,7 @@ document.body.addEventListener('touchstart', function () {
     singleTapVideo.play();
     multiTapVideo.play();
 
+    // Delaying autoplaying-loop of tutorial animations
     singleTapVideo.addEventListener('ended', function () {
         setTimeout(function () {
             singleTapVideo.play();
@@ -45,6 +46,7 @@ multiTapVideo.addEventListener('ended', function () {
 let rippleColor = '#0096ff';
 let rippleShape = 'circle';
 
+// Color picker ----------------------------------------------------------------------------------
 document.getElementById('colorPickerButton').addEventListener('click', function (event) {
     const colorPickerPopup = document.getElementById('colorPickerPopup');
     const shapePickerPopup = document.getElementById('shapePickerPopup');
@@ -61,7 +63,9 @@ document.getElementById('colorPickerPopup').addEventListener('click', function (
     }
     e.stopPropagation();
 });
+// -----------------------------------------------------------------------------------------------
 
+// Shape picker ----------------------------------------------------------------------------------
 document.getElementById('shapePickerButton').addEventListener('click', function (event) {
     const shapePickerPopup = document.getElementById('shapePickerPopup');
     const colorPickerPopup = document.getElementById('colorPickerPopup');
@@ -88,6 +92,7 @@ document.getElementById('shapePickerPopup').addEventListener('click', function (
     }
     e.stopPropagation();
 });
+// -----------------------------------------------------------------------------------------------
 
 document.getElementById('container').addEventListener('click', function (e) {
     const container = e.currentTarget;
@@ -127,7 +132,6 @@ document.getElementById('container').addEventListener('click', function (e) {
     } else if (rippleShape === 'square') {
         svg.setAttribute("width", "100");
         svg.setAttribute("height", "100");
-
         const square = document.createElementNS(svgNS, "rect");
         square.setAttribute("x", "0");
         square.setAttribute("y", "0");
