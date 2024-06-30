@@ -1,6 +1,5 @@
 // Detect Safari
 var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-console.log(isSafari);
 
 document.body.addEventListener('touchstart', function () {
     var singleTapVideo = document.getElementById('singleTapVideo');
