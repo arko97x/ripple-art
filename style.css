@@ -454,8 +454,10 @@ html {
 .link {
     text-decoration: underline;
     transition: text-decoration 0.3s;
+    color: #6d9f71;
 }
 
 .link:hover {
     text-decoration: none;
+    color: #629567;
 }
