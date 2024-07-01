@@ -243,7 +243,7 @@ window.addEventListener('load', function () {
             setTimeout(() => {
                 dContainer.classList.add('show');
             }, 10);
-        }, 750); // Show after 0.5 seconds delay
+        }, 1500); // Show after 0.8 seconds delay
         setCookie("firstVisit", "true", 365);
     }
 });
